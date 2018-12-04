@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:2.7-node
-    working_directory: ~/project
     steps:
       - run:
             name: find location
