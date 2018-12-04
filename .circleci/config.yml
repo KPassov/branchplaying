@@ -11,7 +11,5 @@ jobs:
     steps:
       - run:
             name: find location
-            command: |
-                echo $PWD
-                ls
+            command: ls | echo 
       - run: python test.py
