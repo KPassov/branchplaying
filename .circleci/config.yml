@@ -13,4 +13,5 @@ jobs:
             command: | 
                 cd ..
                 ls -a
+      - checkout
       - run: python test.py
