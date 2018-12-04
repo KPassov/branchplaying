@@ -6,6 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:2.7
+      - image: circleci/python:2.7-node
+    working_directory: ~/
     steps:
       - run: python test.py
