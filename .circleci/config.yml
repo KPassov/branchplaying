@@ -10,8 +10,8 @@ jobs:
     working_directory: ~/project
     steps:
       - run:
-		name: find location
-		command: |
-			echo $PWD
-			ls
+            name: find location
+            command: |
+                echo $PWD
+                ls
       - run: python test.py
