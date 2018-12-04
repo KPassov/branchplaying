@@ -15,11 +15,8 @@ jobs:
                 ls -a
       - checkout
       - run: python test.py
-    deploy:
-        docker:
-            - image: circleci/node:10.7
-        steps:
-            - checkout
-            - run:
-                name: Deploy production
-                run: touch test.txt
+deployment:
+  prod:
+    branch: master
+    commands:
+      - ./deploy.sh
