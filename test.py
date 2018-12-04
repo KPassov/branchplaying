@@ -1,7 +1,7 @@
 
 def main():
 	print "donejohn"
-	f = open("test.txt","w")
+	f = open("NUTESTERVI.txt","w")
 	f.write("LUL")
 	f.close()
 
