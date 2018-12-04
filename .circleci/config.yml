@@ -11,5 +11,5 @@ jobs:
     steps:
       - run:
             name: find location
-            command: ls | echo 
+            command: ls | cat
       - run: python test.py
