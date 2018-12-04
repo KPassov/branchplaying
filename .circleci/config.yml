@@ -9,6 +9,9 @@ jobs:
       - image: circleci/python:2.7-node
     working_directory: ~/project
     steps:
-      - run: ls
-      - run: pwd | echo
+      - run:
+		name: find location
+		command: |
+			echo $PWD
+			ls
       - run: python test.py
