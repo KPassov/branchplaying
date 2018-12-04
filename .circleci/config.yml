@@ -5,6 +5,7 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/python:2.7
     steps:
-      - run: touch working.txt
+      - run: test.py
