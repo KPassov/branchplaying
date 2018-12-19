@@ -20,6 +20,8 @@ s.listen(10)
 def pull_repo(repo_path):
     os.chdir(repo_path)
     subprocess.call(['git','pull'])
+    subprocess.call(['pwd'])
+    subprocess.call(['ls', '-l'])
     subprocess.call(['sh','deploy.sh'])
 
 config = {}
