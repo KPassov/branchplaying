@@ -55,7 +55,7 @@ def get_rsa():
 
 
 # Create Deploy key
-if query('Has deploykey been setup? (y/n)') == 'y':
+if query('Setup deploykey? (y/n)') == 'y':
     rsa_key = get_rsa()
 
     print "Create a deploykey using the key above, at https://github.com/%s/settings/keys/new" % repo_full_name
@@ -77,8 +77,8 @@ with open('/etc/deploytoy.conf', 'w') as conf_file:
 
 # Create deploytoy.py
 
-toy_path = query('full path to deploytoy.py? (default is "~/deploytoy.py")')
-toy_path = toy_path if toy_path else '~/deploytoy.py'
+toy_path = query('full path to deploytoy.py? (default is "/home/ec2-user/deploytoy.py")')
+toy_path = toy_path if toy_path else '/home/ec2-user/deploytoy.py'
 
 copyfile(server_file, toy_path)
 
