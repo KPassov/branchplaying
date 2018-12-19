@@ -6,7 +6,7 @@ import os
 import threading
 
 ADDR = '0.0.0.0'
-PORT = 5004
+PORT = 5000
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,3 +36,20 @@ while True:
             thread.run()
     except Exception as e: # Die gracefully
         print "failed :(", e
+
+
+
+
+# deploytoy_socket.py:
+
+#     read /etc/deploytoy.conf
+#     setup socket to 0.0.0.0:5000
+
+#     on ping
+#         check repo name against conf
+#         check payload origin is github
+
+#         cd into
+#         pull repo
+
+#         run deploy.sh
