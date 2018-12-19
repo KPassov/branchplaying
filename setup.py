@@ -59,7 +59,9 @@ if query('create deploy key? (y/n)') == 'y':
     rsa_key = get_rsa()
 
     print "Create a deploykey using the key above, at https://github.com/%s/settings/keys/new" % repo_full_name
-    os.chdir(repo_root)
+
+
+os.chdir(repo_root)
 
 
 
