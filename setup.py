@@ -103,7 +103,7 @@ else:
 
 
 # Start websocket
-call(['python',toy_path])
+call(['python',toy_path, '&'])
 
 print "Create a Webhook with the Json Content type listening for push events, at https://github.com/%s/settings/hooks/new" % repo_full_name
 print "For the Payload URL, 'http://<SERVER_IP>:5000'. The deploytoy.py is listening on port 5000, so make sure the server has that port open."
