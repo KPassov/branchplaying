@@ -55,7 +55,7 @@ def get_rsa():
 
 
 # Create Deploy key
-if query('create deploy key? (y/n)') == 'y':
+if query('Has deploykey been setup? (y/n)') == 'y':
     rsa_key = get_rsa()
 
     print "Create a deploykey using the key above, at https://github.com/%s/settings/keys/new" % repo_full_name
@@ -66,7 +66,6 @@ os.chdir(repo_root)
 
 
 # Clone Repo
-print repo_root + repo_full_name.split('/')[-1]
 while (not os.path.isdir(repo_root + repo_full_name.split('/')[-1])) and query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
     call(['git','clone','git@github.com:%s.git'%repo_full_name])
 
@@ -78,10 +77,8 @@ with open('/etc/deploytoy.conf', 'w') as conf_file:
 
 # Create deploytoy.py
 
-os.chdir(repo_root)
-
 toy_path = query('full path to deploytoy.py? (default is "~/deploytoy.py")')
-toy_path = toy_path if toy_path else '/etc/deploytoy.conf'
+toy_path = toy_path if toy_path else '~/deploytoy.py'
 
 copyfile(server_file, toy_path)
 
@@ -99,6 +96,7 @@ if crontab_line not in Popen(["crontab -l"], shell=True, stdout=PIPE).communicat
     os.system("crontab < /tmp/cronaddition.txt")
 
     os.system("rm /tmp/cronaddition.txt")
+    print "added crontab"
 
 else:
     print "already exists"
