@@ -1,2 +1,2 @@
 #!/bin/sh
-touch workingasd.txt
+touch work.txt
