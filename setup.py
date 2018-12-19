@@ -39,8 +39,8 @@ if not os.path.isfile('/etc/deploytoy.conf'):
     open('/etc/deploytoy.conf', 'w+')
     print "created: /etc/deploytoy.conf"
 
-process = Popen("sudo python " + toy_path + ' > /dev/null 2> /dev/null &', shell=False)
+process = Popen("sudo python " + toy_path + ' > /dev/null 2> /dev/null &', shell=True)
 
-print "Deploytoy installed and running with pid %s! use the add_repo.py to add additional repos" % process.pid+1#pid hack
+print "Deploytoy installed and running with pid %s! use the add_repo.py to add additional repos" % int(process.pid)+1#pid hack
 
 # Start websocket
