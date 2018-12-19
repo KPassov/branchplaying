@@ -1,2 +1,2 @@
 #!/bin/sh
-touch work.txt
+touch working.txt
