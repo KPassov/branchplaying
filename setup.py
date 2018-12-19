@@ -40,7 +40,7 @@ if not os.path.isfile('/etc/deploytoy.conf'):
     print "created: /etc/deploytoy.conf"
 
 
-process = subprocess.Popen("python " + toy_path + ' > /dev/null 2> /dev/null &', shell=True)
+process = Popen("python " + toy_path + ' > /dev/null 2> /dev/null &', shell=True)
 
 print "Deploytoy installed and running with pid %s! use the add_repo.py to add additional repos" % process.pid
 
