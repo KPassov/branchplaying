@@ -23,7 +23,7 @@ repo_root = '/home/ec2-user/' if not repo_root else repo_root
 
 
 # Create and Set Deploy key
-if query('Does the repo have a deploykey? (y/n)') == 'y':
+if query('Does the repo have a deploykey? (y/n)') != 'y':
 
     print "\n"
     print "Setting up Deployment Key"
@@ -55,7 +55,7 @@ while (not os.path.isdir(repo_root + repo_full_name.split('/')[-1])) and query('
 
 # Update config file
 with open('/etc/deploytoy.conf', 'w') as conf_file:
-    conf_file.writeline(['repo_full_name %s\nrepo_root %s'%(repo_full_name,repo_root)])
+    conf_file.writelines(['repo_full_name %s\nrepo_root %s'%(repo_full_name,repo_root)])
 
 # Create Webhook
 print "Create a Webhook with the Json Content type listening for push events, at https://github.com/%s/settings/hooks/new" % repo_full_name
