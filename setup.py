@@ -39,8 +39,6 @@ if not os.path.isfile('/etc/deploytoy.conf'):
     open('/etc/deploytoy.conf', 'w+')
     print "created: /etc/deploytoy.conf"
 
-print "python " + toy_path + ' > /dev/null 2> /dev/null &'
-
 process = Popen("sudo python " + toy_path + ' > /dev/null 2> /dev/null &', shell=False)
 
 print "Deploytoy installed and running with pid %s! use the add_repo.py to add additional repos" % process.pid+1#pid hack
