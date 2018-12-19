@@ -20,7 +20,7 @@ repo_full_name = 'KPassov/branchplaying' if not repo_full_name else repo_full_na
 
 repo_root = query("Full path to where I should place the repo? (i.e '~/')")
 
-repo_root = '.' if not repo_root else repo_root
+repo_root = '~/' if not repo_root else repo_root
 
 # We might change dir later when we pull, so i'm saving where deploytoy is placed
 server_file = os.path.realpath(__file__).replace('setup.py','deploytoy.py')
