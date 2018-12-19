@@ -64,8 +64,8 @@ if query('create deploy key? (y/n)') == 'y':
 
 
 # Clone Repo
-print repo_root + repo_full_name
-while (not os.path.isdir(repo_root + repo_full_name)) and query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
+print repo_root + repo_full_name.split('/')[-1]
+while (not os.path.isdir(repo_root + repo_full_name.split('/')[-1])) and query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
     call(['git','clone','git@github.com:%s.git'%repo_full_name])
 
 
