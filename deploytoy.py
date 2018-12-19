@@ -16,19 +16,21 @@ s.listen(10)
 
 
 # Read config
-config = {}
-for c in open('/etc/deploytoy.conf', 'r').readlines():
-    key, value = c.replace('\n','').split(' ')
-    config[key] = value
 
 def pull_repo(repo_path):
     os.chdir(repo_path)
     subprocess.call(['git','pull'])
     subprocess.call(['sh','deploy.sh'])
 
-print config
+config = {}
+
 while True:
     conn, addr = s.accept()
+
+    for c in open('/etc/deploytoy.conf', 'r').readlines():
+        key, value = c.replace('\n','').split(' ')
+        config[key] = value
+
     try:
         data = json.loads(conn.recv(20000))
         if data['repository']['full_name'] == config['repo_full_name']:
@@ -36,20 +38,3 @@ while True:
             thread.run()
     except Exception as e: # Die gracefully
         print "failed :(", e
-
-
-
-
-# deploytoy_socket.py:
-
-#     read /etc/deploytoy.conf
-#     setup socket to 0.0.0.0:5000
-
-#     on ping
-#         check repo name against conf
-#         check payload origin is github
-
-#         cd into
-#         pull repo
-
-#         run deploy.sh
