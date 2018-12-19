@@ -15,7 +15,7 @@ open('/etc/deploytoy.conf', 'w+')
 toy_path = raw_input('full path to deploytoy.py? (default is "/home/ec2-user/deploytoy.py")')
 toy_path = toy_path if toy_path else '/home/ec2-user/deploytoy.py'
 
-copyfile(server_file, toy_path)
+copyfile('deploytoy.py', toy_path)
 
 
 # Add websocket file to reboot
