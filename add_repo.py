@@ -24,30 +24,23 @@ repo_root = '/home/ec2-user/' if not repo_root else repo_root
 
 # Create and Set Deploy key
 if query('Does the repo have a deploykey? (y/n)') == 'y':
-    rsa_key = get_rsa()
 
     print "\n"
     print "Setting up Deployment Key"
 
-    rsa_key = Popen(['cat ~/.ssh/*.pub'], shell=True, stdout=PIPE).communicate()[0]
+    found_key = Popen(['cat ~/.ssh/*.pub'], shell=True, stdout=PIPE).communicate()[0]
 
     if isinstance(rsa_key, str) and len(rsa_key) > 10:
         print "    found public rsa key \n", rsa_key
-        if query("Use this rsa public key? (y/n)") == 'y':
-            return rsa_key
 
-    if query("Could not find key Read rsa key from path? (y/n)") == 'y':
-        rsa_key = call('cat ' + query('rsa public key full path?'))
-        print "    found public rsa key \n", rsa_key
-        if query("Use this rsa public key? (y/n)") == 'y':
-            return rsa_key
+    elif query("Could not find key Read rsa key from path? (y/n)") == 'y':
+        found_key = call('cat ' + query('rsa public key full path?'))
+        print "    found public rsa key \n", found_key
 
-    if query("Create new key? (y/n)") == 'y':
+    elif query("Create new key? (y/n)") == 'y':
         call(['ssh-keygen'])
-        rsa_key = call('cat %s' % query('rsa public key full path?'))
-        print rsa_key
-        if query("Use this rsa public key? (y/n)") == 'y':
-            return rsa_key
+        found_key = call('cat %s' % query('rsa public key full path?'))
+        print found_key
 
     print "Create a deploykey using the key above, at https://github.com/%s/settings/keys/new" % repo_full_name
 
@@ -56,7 +49,7 @@ os.chdir(repo_root)
 
 
 # Clone Repo
-while (not os.path.isdir(repo_root + repo_full_name.split('/')[-1])) and query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
+while (not os.path.isdir(repo_root + repo_full_name.split('/')[-1])) and query('Press any key when deploykey is setup and i\'ll try to clone ("n" to cancel)') != 'n':
     call(['git','clone','git@github.com:%s.git'%repo_full_name])
 
 
