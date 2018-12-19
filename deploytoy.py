@@ -20,8 +20,6 @@ s.listen(10)
 def pull_repo(repo_path):
     os.chdir(repo_path)
     subprocess.call(['git','pull'])
-    subprocess.call(['pwd'])
-    subprocess.call(['ls', '-l'])
     subprocess.call(['sh','deploy.sh'])
 
 config = {}
@@ -36,7 +34,7 @@ while True:
     try:
         data = json.loads(conn.recv(20000))
         if data['repository']['full_name'] == config['repo_full_name']:
-            thread = threading.Thread(target = pull_repo, args=(config['repo_root'], ) )
+            thread = threading.Thread(target = pull_repo, args=(config['repo_root'] + config['repo_full_name'].split('/')[-1], ) )
             thread.run()
     except Exception as e: # Die gracefully
         print "failed :(", e

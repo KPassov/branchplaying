@@ -9,9 +9,6 @@ if os.geteuid() != 0:
     exit("You need to have root privileges to run this script.\nPlease try again, this time using 'sudo'. Exiting.")
 
 
-# Create config file
-open('/etc/deploytoy.conf', 'w+')
-
 # Create deploytoy.py
 toy_path = raw_input('full path to deploytoy.py? (default is "/home/ec2-user/deploytoy.py")')
 toy_path = toy_path if toy_path else '/home/ec2-user/deploytoy.py'
@@ -31,12 +28,20 @@ if crontab_line not in Popen(["crontab -l"], shell=True, stdout=PIPE).communicat
     os.system("crontab < /tmp/cronaddition.txt")
 
     os.system("rm /tmp/cronaddition.txt")
-    print "added to crontab"
+    print "Added reboot to crontab"
 
 else:
     print "crontab already exists"
 
 
-print "Deploytoy installed! use the add_repo.py to add additional repos"
+# Create config file
+if not os.path.isfile('/etc/deploytoy.conf'):
+    open('/etc/deploytoy.conf', 'w+')
+    print "created: /etc/deploytoy.conf"
+
+
+process = subprocess.Popen("python " + toy_path + ' > /dev/null 2> /dev/null &', shell=True)
+
+print "Deploytoy installed and running with pid %s! use the add_repo.py to add additional repos" % process.pid
 
 # Start websocket
