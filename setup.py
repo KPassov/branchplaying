@@ -2,6 +2,7 @@
 
 from shutil import copyfile
 import os
+from subprocess import Popen, PIPE
 
 
 if os.geteuid() != 0:

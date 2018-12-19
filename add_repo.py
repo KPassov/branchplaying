@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-from subprocess import call, Popen, PIPE
+from subprocess import call
 
 
 if os.geteuid() != 0:
