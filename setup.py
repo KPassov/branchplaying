@@ -54,60 +54,52 @@ def get_rsa():
             return rsa_key
 
 
-try:
-    # Create Deploy key
+# Create Deploy key
+if query('create deploy key? (y/n)') == 'y'
     rsa_key = get_rsa()
+
     print "Create a deploykey using the key above, at https://github.com/%s/settings/keys/new" % repo_full_name
     os.chdir(repo_root)
-except Exception as e:
-    print "Something went wrong while authenticating and cloning"
 
 
-try:
-    # Clone Repo
-    while query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
-        call(['git','clone','git@github.com:%s.git'%repo_full_name])
-except Exception as e:
-    print "Something when wrong while cloning"
+
+# Clone Repo
+print repo_root + repo_full_name
+while (not os.path.isdir(repo_root + repo_full_name)) and query('Press any key when done, and i\'ll try to clone ("n" to cancel)') != 'n':
+    call(['git','clone','git@github.com:%s.git'%repo_full_name])
 
 
-try:
-    # Create config file
-    with open('/etc/deploytoy.conf', 'w') as conf_file:
-        conf_file.writelines(['repo_full_name %s\nrepo_root %s'%(repo_full_name,repo_root)])
+# Create config file
+with open('/etc/deploytoy.conf', 'w') as conf_file:
+    conf_file.writelines(['repo_full_name %s\nrepo_root %s'%(repo_full_name,repo_root)])
 
 
-    # Create deploytoy.py
+# Create deploytoy.py
 
-    os.chdir(repo_root)
+os.chdir(repo_root)
 
-    toy_path = query('full path to deploytoy.py? (default is "~/deploytoy.py")')
-    toy_path = toy_path if toy_path else '/etc/deploytoy.conf'
+toy_path = query('full path to deploytoy.py? (default is "~/deploytoy.py")')
+toy_path = toy_path if toy_path else '/etc/deploytoy.conf'
 
-    copyfile(server_file, toy_path)
-except Exception as e:
-    print "failed while trying to create conf", e
+copyfile(server_file, toy_path)
 
 
 # Add websocket file to reboot
 
-try:
-    crontab_line = '@reboot (python %s &)' % toy_path
+crontab_line = '@reboot (python %s &)' % toy_path
 
-    if crontab_line not in Popen(["crontab -l"], shell=True, stdout=PIPE).communicate()[0]:
+if crontab_line not in Popen(["crontab -l"], shell=True, stdout=PIPE).communicate()[0]:
 
-        os.system("crontab -l > /tmp/cronaddition.txt")
+    os.system("crontab -l > /tmp/cronaddition.txt")
 
-        os.system("echo '%s' >> /tmp/cronaddition.txt"%crontab_line)
+    os.system("echo '%s' >> /tmp/cronaddition.txt"%crontab_line)
 
-        os.system("crontab < /tmp/cronaddition.txt")
+    os.system("crontab < /tmp/cronaddition.txt")
 
-        os.system("rm /tmp/cronaddition.txt")
+    os.system("rm /tmp/cronaddition.txt")
 
-    else:
-        print "already exists"
-except Exception as e:
-    print "failed while adding reboot to crontab", e
+else:
+    print "already exists"
 
 
 # Start websocket
