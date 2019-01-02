@@ -11,19 +11,19 @@ def query(message):
     a = raw_input(message)
     return a
 
+
+repo_full_name = ""
+repo_root = ""
 # Get input for config
-repo_full_name = query("Full repository name (i.e 'KPassov/deploytoy'):")
+while not repo_full_name:
+    repo_full_name = query("Full repository name (i.e 'KPassov/deploytoy'):")
 
-repo_full_name = 'KPassov/branchplaying' if not repo_full_name else repo_full_name
-
-repo_root = query("Full path to where I should place the repo? (i.e '/home/ec2-user/')")
-
-repo_root = '/home/ec2-user/' if not repo_root else repo_root
-
+while not repo_root:
+    repo_root = query("Full path to where I should place the repo? (i.e '/home/ec2-user/')")
 
 
 # Create and Set Deploy key
-if query('Does the repo have a deploykey? (y/n)') != 'y':
+if query('Setup deploykey? (y/n)') == 'y':
 
     print "\n"
     print "Setting up Deployment Key"
